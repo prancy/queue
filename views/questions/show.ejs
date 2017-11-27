@@ -1,45 +1,41 @@
 <!-- <h1><%= question.options %> </h1> -->
 <%- include('../_partials/head') %>
 <%- include('../_partials/navInstructor') %>
-
-
 <main class="container">
-<div class="show-quiz">
-<div class="col-sm-12 quiz-card text-center">
-<div id="wrapper-question-show">
-<h1>Question:</h1> 
-<br>
-<h2><span><%= question.question %></span></h2>
-<br>
-
-<h4>Answers</h4>
-<% var alphas = ['A', 'B', 'C', 'D', 'E', 'F', 'G']%>
-<br>
-<form action="/quizzes/answers" method="POST">
-  <% question.options.forEach((option, idx) => { %>
-    <div class="options-left-align" >
-    <label>
-      <%= alphas[idx] %>&nbsp;
-      <input type="radio" name="selectedOption" value= <%= option.id %>> &nbsp;
-      <%= option.option %>
-    </label><br>
-  <% }) %>
+  <div class="show-quiz">
+    <div class="col-sm-12 quiz-card text-center">
+      <div id="wrapper-question-show">
+        <h1>Question:</h1> 
+        <br>
+        <h2><span><%= question.question %></span></h2>
+        <br>
+        <h4>Answers</h4>
+        <% var alphas = ['A', 'B', 'C', 'D', 'E', 'F', 'G']%>
+        <br>
+        <form action="/quizzes/answers" method="POST">
+          <% question.options.forEach((option, idx) => { %>
+          <div class="options-left-align" >
+          <label>
+            <%= alphas[idx] %>&nbsp;
+            <input type="radio" name="selectedOption" value="<%= option.id %>"> &nbsp;
+            <%= option.option %>
+          </label><br>
+          <% }) %>
+          </div>
+          <br>
+          <br>
+          <input class="btn btn-success" type="submit" value="Submit Answer">
+        </form>
+        <br>
+        <br>
+        <% if (currentUser.instructor) { %>
+        <form action="/quizzes/questions/<%= question.id %>/options/new">
+          <input type="submit" class="btn btn-primary" value="Create an Answer"> 
+        </form>
+        <% } %>
+        <br>
+      </div>
     </div>
-  <br>
-  <br>
-  <input class="btn btn-success" type="submit" value="Submit Answer">
-  
-</form>
-<br>
-<br>
-<% if (currentUser.instructor) { %>
-<form action="/quizzes/questions/<%= question.id %>/options/new">
-  <input type="submit" class="btn btn-primary" value="Create an Answer"> 
-</form>
-<% } %>
-<br>
-</div>
-</div>
+  </div>
 </main>
-</div>
 <%- include('../_partials/footer') %> 
